@@ -57,6 +57,13 @@ public class StudentServlet extends HttpServlet {
 
         System.out.println(result.getData().toString());
 
+        request.setAttribute("scoreList", result.getData());
+
+        try {
+            request.getRequestDispatcher("score.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

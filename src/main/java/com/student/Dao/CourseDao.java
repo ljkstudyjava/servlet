@@ -35,8 +35,6 @@ public class CourseDao {
             throw new RuntimeException(e);
         }
 
-
-
         return courseList;
     }
 }
