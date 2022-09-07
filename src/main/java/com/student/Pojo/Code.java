@@ -19,6 +19,9 @@ public class Code {
     public static final int Login_Success = 200;
     public static final int Login_Error = 201;
 
+
+    public static final int SUCCESS_CODE = 400;//通用成功码
+    public static final String SUCCESS_MSG = "成功";//通用成功码
     public static final int PageNumber_Defined=1;
     public static final int PageSize_Defined=3;
 
