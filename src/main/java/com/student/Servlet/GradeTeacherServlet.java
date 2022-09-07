@@ -47,6 +47,7 @@ public class GradeTeacherServlet extends HttpServlet {
         }
     }
 
+//    通过回显数据中的学生编号和课程标号来确定需要修改的行
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cnoStr = request.getParameter("cno");
         String snoStr = request.getParameter("sno");
@@ -59,6 +60,8 @@ public class GradeTeacherServlet extends HttpServlet {
         request.getRequestDispatcher("updateGrade.jsp").forward(request,response);
 
     }
+
+//    获取教师班级学生的成绩
 
     private void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");

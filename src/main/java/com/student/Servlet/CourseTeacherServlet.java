@@ -19,6 +19,7 @@ public class CourseTeacherServlet extends HttpServlet {
         this.doGet(request, response);
     }
 
+//    教师的课程列表
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
 //        System.out.println(user.toString());

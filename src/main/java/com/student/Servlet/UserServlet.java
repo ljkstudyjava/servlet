@@ -40,21 +40,23 @@ public class UserServlet extends HttpServlet {
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String getVarify = request.getParameter("varify");
+//        用户名和密码在数据库中比较
         Result result = userService.login(userName,password);
         if (result.getCODE() == Code.Login_Error){
             request.setAttribute("msg",result.getMsg());
             request.getRequestDispatcher("index.jsp").forward(request,response);
         }else if (result.getCODE() == Code.Login_Success){
-
+//            获取验证码，并比较
             String varify = (String) request.getSession().getAttribute("varify");
             if(varify.equalsIgnoreCase(getVarify)){
                 User user = (User) result.getData();
 //            System.out.println(user);
                 request.getSession().setAttribute("user",user);
-
+//             传递目录信息
 //            获取左侧列表并转成JSON格式，通过Session传递到left.jsp
                 List<Menu> leftList = menuService.getLeftList(user.getRoleId());
                 String menuList = JSON.toJSONString(leftList);
