@@ -9,8 +9,14 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        h1{
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-
+    欢迎<h1>${sessionScope.user.userName}</h1>登录&nbsp;
+    <a href="${pageContext.request.contextPath}/UserServlet?method=logout" target="_parent">退出登录</a>
 </body>
 </html>

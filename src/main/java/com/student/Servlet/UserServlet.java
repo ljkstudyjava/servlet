@@ -2,8 +2,10 @@ package com.student.Servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.student.Pojo.Code;
+import com.student.Pojo.Menu;
 import com.student.Pojo.Result;
 import com.student.Pojo.User;
+import com.student.Service.MenuService;
 import com.student.Service.UserService;
 
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import java.util.List;
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
     private UserService userService = new UserService();
+    private MenuService menuService = new MenuService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doGet(request, response);
     }
@@ -25,8 +28,15 @@ public class UserServlet extends HttpServlet {
         String method = request.getParameter("method");
         if (method.equals("login")){
             login(request,response);
+        }else if (method.equals("logout")){
+            logout(request,response);
         }
 
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().invalidate();
+        response.sendRedirect("index.jsp");
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,11 +55,11 @@ public class UserServlet extends HttpServlet {
 //            System.out.println(user);
                 request.getSession().setAttribute("user",user);
 
-////            获取左侧列表并转成JSON格式，通过Session传递到left.jsp
-//                List<Menu> leftList = menuService.getLeftList(user.getRoleId());
-//                String menuList = JSON.toJSONString(leftList);
-////                System.out.println(menuList);
-//                request.getSession().setAttribute("menuList",menuList);
+//            获取左侧列表并转成JSON格式，通过Session传递到left.jsp
+                List<Menu> leftList = menuService.getLeftList(user.getRoleId());
+                String menuList = JSON.toJSONString(leftList);
+//                System.out.println(menuList);
+                request.getSession().setAttribute("menuList",menuList);
                 response.sendRedirect("frame.jsp");
 //            request.getRequestDispatcher("frame.jsp").forward(request,response);
             }else {
