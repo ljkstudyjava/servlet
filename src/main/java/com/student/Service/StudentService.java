@@ -3,6 +3,7 @@ package com.student.Service;
 import com.student.Dao.CourseDao;
 import com.student.Dao.StudentDao;
 import com.student.Pojo.Course;
+import com.student.Pojo.DoRegisterInfo;
 import com.student.Pojo.Result;
 
 import java.util.List;
@@ -44,4 +45,5 @@ public class StudentService {
 
         return studentDao.selectCourse(id, tnoStr, cnoStr);
     }
+
 }

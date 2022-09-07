@@ -1,5 +1,6 @@
 package com.student.Dao;
 
+import com.student.Pojo.DoRegisterInfo;
 import com.student.Pojo.Result;
 import com.student.Pojo.StudentInfoCourse;
 import com.student.utils.JdbcUtils;
@@ -100,5 +101,19 @@ public class StudentDao {
 
         return list;
 
+    }
+
+    public void doInsertStudent(DoRegisterInfo doRegisterInfo) {
+        conn = JdbcUtils.getConnection();
+        String sql = "insert into stu (sno, sname, gender, address) values (?,?,?,?)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,doRegisterInfo.getSno());
+            ps.setString(2,doRegisterInfo.getSname());
+            ps.setString(3,doRegisterInfo.getSex());
+            ps.setString(3,doRegisterInfo.getAddress());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

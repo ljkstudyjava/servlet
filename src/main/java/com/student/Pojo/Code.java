@@ -35,9 +35,20 @@ public class Code {
     public static final int PageSize_Defined=3;
 
 
+    public static final int ERROR_CODE_EMPTY_USERNAME = 103;
+    public static final String ERROR_MSG_EMPTY_USERNAME = "用户名为空";
 
+    public static final int ERROR_CODE_EMPTY_PASSWORD = 104;
 
+    public static final String ERROR_MSG_EMPTY_PASSWORD = "密码为空";
 
+    public static final int ERROR_CODE_EMPTY_SNAME = 105;
+
+    public static final String ERROR_MSG_EMPTY_SNAME = "姓名不能为空";
+
+    public static final int ERROR_CODE_USER_EXIST = 106;
+
+    public static final String ERROR_MSG_USER_EXIST = "该用户已存在";
 
 
 
