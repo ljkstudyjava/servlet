@@ -1,5 +1,5 @@
 package com.student.Pojo;
-
+//用于教师查询学生信息
 public class TeacherInfoGrade {
     private int sno;
     private String sname;
