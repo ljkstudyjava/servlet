@@ -9,7 +9,7 @@ public class JdbcUtils {
 
     // 数据库的用户名与密码，需要根据自己的设置
     static final String USER = "root";
-    static final String PASS = "111111";
+    static final String PASS = "123456";
 
 
 

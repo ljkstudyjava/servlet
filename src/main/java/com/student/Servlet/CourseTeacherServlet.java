@@ -21,7 +21,7 @@ public class CourseTeacherServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        System.out.println(user.toString());
+//        System.out.println(user.toString());
         List<Course> courseTeacherList = courseService.getAllByTno(user.getUserName());
         request.setAttribute("courseTeacherList",courseTeacherList);
         request.getRequestDispatcher("courseTea.jsp").forward(request,response);
