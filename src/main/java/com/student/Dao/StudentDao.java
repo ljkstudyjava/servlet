@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.student.Pojo.Code.SUCCESS_CODE;
-import static com.student.Pojo.Code.SUCCESS_MSG;
+import static com.student.Pojo.Code.*;
 
 public class StudentDao {
 
@@ -51,7 +50,55 @@ public class StudentDao {
             throw new RuntimeException(e);
         }
 
-        System.out.println(list.toString());
         return new Result(SUCCESS_CODE, SUCCESS_MSG, list);
+    }
+
+    public Result selectCourse(int id, int tnoStr, int cnoStr) {
+
+        conn = JdbcUtils.getConnection();
+        String sql = "insert into grade  (sno,tno,cno) values (?,?,?)";
+        int row;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setInt(2, tnoStr);
+            ps.setInt(3, cnoStr);
+            row = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (row <= 0) {
+            return new Result(DB_ERROR_CODE, DB_ERROR_MSG_INSERT);
+        }
+        return new Result(SUCCESS_CODE, SUCCESS_MSG);
+    }
+
+    //获取已选课程的id
+    public List<Integer> getMyCourseId(int sno) {
+
+        conn = JdbcUtils.getConnection();
+
+        List<Integer> list = new ArrayList<>();
+
+        String sql = "SELECT course.cid \n" +
+                "FROM course,grade,teacher \n" +
+                "WHERE grade.cno=course.cid \n" +
+                "AND course.tno=teacher.tno\n" +
+                "AND grade.sno = ?";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, sno);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+
     }
 }

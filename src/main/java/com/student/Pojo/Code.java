@@ -22,6 +22,15 @@ public class Code {
 
     public static final int SUCCESS_CODE = 400;//通用成功码
     public static final String SUCCESS_MSG = "成功";//通用成功码
+
+    public static final int DB_SUCCESS_CODE = 200;
+
+    public static final int DB_ERROR_CODE = 101;
+
+    public static final String DB_SUCCESS_MSG = "成功";
+
+    public static final String DB_ERROR_MSG_INSERT = "插入失败";
+
     public static final int PageNumber_Defined=1;
     public static final int PageSize_Defined=3;
 

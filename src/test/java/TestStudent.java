@@ -22,30 +22,35 @@ public class TestStudent {
 
         conn = JdbcUtils.getConnection();
 
-        List<StudentInfoCourse> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
-        String sql = "SELECT course.cname,  course.cid,teacher.tname,grade.score \n" +
+        String sql = "SELECT course.cid \n" +
                 "FROM course,grade,teacher \n" +
                 "WHERE grade.cno=course.cid \n" +
                 "AND course.tno=teacher.tno\n" +
-                "AND grade.sno = ?";
+                "AND grade.sno = 2209011";
 
         try {
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, 220906);
             rs = ps.executeQuery();
             while (rs.next()) {
-                StudentInfoCourse studentInfoCourse = new StudentInfoCourse();
-                studentInfoCourse.setCname(rs.getString(1));
-                studentInfoCourse.setCid(rs.getString(2));
-                studentInfoCourse.setTname(rs.getString(3));
-                studentInfoCourse.setScore(rs.getDouble(4));
-                list.add(studentInfoCourse);
+                list.add(rs.getInt(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        System.out.println(list.toString());
+        //String idList = String.valueOf(list);
+        System.out.println(list);
+        System.out.println(list.get(0));
+        System.out.println(list.size());
+        String ss = "select * from course where cid not in (?";
+
+        for (int i = 1; i < 2; i++) {
+            ss += ",?";
+        }
+        ss += ")";
+
+        System.out.println(ss);
     }
 }
