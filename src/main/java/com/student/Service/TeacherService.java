@@ -23,4 +23,8 @@ public class TeacherService {
     public int updateTea(int tno, String tname, String gender, int phone) {
         return teacherDao.updateTea(tno,tname,gender,phone);
     }
+
+    public int addTea(int tno, String tname, String gender, int phone,String password) {
+        return teacherDao.addTea(tno,tname,gender,phone,password);
+    }
 }

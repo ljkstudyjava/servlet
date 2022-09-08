@@ -30,13 +30,33 @@ public class TeacherServlet extends HttpServlet {
             getTeaByTno(request,response);
         }else if(method.equals("updateTea")){
             updateTea(request,response);
+        }else if(method.equals("addTea")){
+            addTea(request,response);
         }
 
 
 
     }
 
-//    修改信息
+    private void addTea(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String tnoStr = request.getParameter("tno");
+        String tnameStr = request.getParameter("tname");
+        String genderStr = request.getParameter("gender");
+        String phoneStr = request.getParameter("phone");
+        String password = request.getParameter("password");
+
+        String tname = MyUTF.getNewString(tnameStr);
+        String gender = MyUTF.getNewString(genderStr);
+
+        int tno = Integer.parseInt(tnoStr);
+        int phone = Integer.parseInt(phoneStr);
+        int row = teacherService.addTea(tno,tname,gender,phone,password);
+        if(row > 0){
+            getAllTea(request,response);
+        }
+    }
+
+    //    修改信息
     private void updateTea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        request.setCharacterEncoding("utf-8");
 //        response.setContentType("charset=utf-8");

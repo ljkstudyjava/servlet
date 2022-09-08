@@ -93,4 +93,43 @@ public class TeacherDao {
         }
         return row;
     }
+//  添加教师列表以及账号
+    public int addTea(int tno, String tname, String gender, int phone,String password) {
+        int row = 0;
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "insert into teacher values (?,?,?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,tno);
+            ps.setString(2,tname);
+            ps.setString(3,gender);
+            ps.setInt(4,phone);
+            row = ps.executeUpdate();
+            if(row > 0){
+                row = addTeaLogin(tno, password);
+            }
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return row;
+    }
+
+//    添加教师登录账号
+    public int addTeaLogin(int tno,String password) {
+        int row = 0;
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "insert into user (username, password, role_id) values (?,?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,tno);
+            ps.setString(2,password);
+            ps.setInt(3,2);
+            row = ps.executeUpdate();
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return row;
+    }
 }
