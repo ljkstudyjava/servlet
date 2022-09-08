@@ -37,4 +37,60 @@ public class TeacherDao {
 
 
     }
+
+//    根据tno删除
+    public int deleteTea(int tno) {
+        int row = 0;
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "delete from teacher where tno = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,tno);
+            row = ps.executeUpdate();
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return row;
+    }
+
+//    根据tno获取
+    public Teacher getTeaByTno(int tno) {
+        Teacher teacher = new Teacher();
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "select * from teacher where tno = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,tno);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                teacher.setTno(rs.getInt(1));
+                teacher.setTname(rs.getString(2));
+                teacher.setGender(rs.getString(3));
+                teacher.setPhone(rs.getInt(4));
+            }
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return teacher;
+    }
+
+    public int updateTea(int tno, String tname, String gender, int phone) {
+        int row = 0;
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "update teacher set tname = ? ,gender = ? ,phone = ? where tno = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,tname);
+            ps.setString(2,gender);
+            ps.setInt(3,phone);
+            ps.setInt(4,tno);
+            row = ps.executeUpdate();
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return row;
+    }
 }

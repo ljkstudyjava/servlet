@@ -11,4 +11,16 @@ public class TeacherService {
     public List<Teacher> getAllTea() {
         return teacherDao.getAllTea();
     }
+//  删除教师信息
+    public int deleteTea(int tno) {
+        return teacherDao.deleteTea(tno);
+    }
+//回显数据用于修改
+    public Teacher getTeaByTno(int tno) {
+        return teacherDao.getTeaByTno(tno);
+    }
+
+    public int updateTea(int tno, String tname, String gender, int phone) {
+        return teacherDao.updateTea(tno,tname,gender,phone);
+    }
 }

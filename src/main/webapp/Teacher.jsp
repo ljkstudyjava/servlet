@@ -12,6 +12,7 @@
     <title>教师管理</title>
 </head>
 <body>
+
 <table border="1" cellspacing="0">
     <tr>
         <th>教师编号</th>
@@ -26,11 +27,20 @@
             <td>${teacher.tname}</td>
             <td>${teacher.gender}</td>
             <td>${teacher.phone}</td>
-            <td><a href="">删除</a>|
-                <a href="">修改</a>
+            <td><a href="javascript:deleteTea(${teacher.tno})">删除</a>|
+                <a href="javascript:updateTea(${teacher.tno})">修改</a>
             </td>
         </tr>
     </c:forEach>
 </table>
+
+    <script type="text/javascript">
+        function deleteTea(tno){
+            window.location.href = "${pageContext.request.contextPath}/TeacherServlet?method=deleteTea&tno="+tno;
+        }
+        function updateTea(tno){
+            window.location.href = "${pageContext.request.contextPath}/TeacherServlet?method=getTeaByTno&tno="+tno;
+        }
+    </script>
 </body>
 </html>
