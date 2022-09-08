@@ -1,5 +1,6 @@
 package com.student.Dao;
 
+import com.student.Pojo.BaseQuery;
 import com.student.Pojo.Menu;
 import com.student.Pojo.Teacher;
 import com.student.utils.JdbcUtils;
@@ -131,5 +132,46 @@ public class TeacherDao {
             throwables.printStackTrace();
         }
         return row;
+    }
+
+    public int getTotal() {
+        int total = 0;
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "select * from teacher";
+            ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                total++;
+            }
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return total;
+    }
+
+    public List<Teacher> getPages(BaseQuery baseQuery) {
+        List<Teacher> teacherList = new ArrayList<Teacher>();
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = "select * from teacher limit ?,?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,(baseQuery.getPageNum()-1)*baseQuery.getPageSize());
+            ps.setInt(2,baseQuery.getPageSize());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Teacher teacher = new Teacher();
+                teacher.setTno(rs.getInt(1));
+                teacher.setTname(rs.getString(2));
+                teacher.setGender(rs.getString(3));
+                teacher.setPhone(rs.getInt(4));
+                teacherList.add(teacher);
+            }
+            JdbcUtils.close(ps,conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return teacherList;
     }
 }

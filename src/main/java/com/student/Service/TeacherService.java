@@ -1,6 +1,7 @@
 package com.student.Service;
 
 import com.student.Dao.TeacherDao;
+import com.student.Pojo.BaseQuery;
 import com.student.Pojo.Teacher;
 
 import java.util.List;
@@ -26,5 +27,13 @@ public class TeacherService {
 
     public int addTea(int tno, String tname, String gender, int phone,String password) {
         return teacherDao.addTea(tno,tname,gender,phone,password);
+    }
+
+    public List<Teacher> getPages(BaseQuery baseQuery) {
+        return teacherDao.getPages(baseQuery);
+    }
+
+    public int getTotal() {
+        return teacherDao.getTotal();
     }
 }

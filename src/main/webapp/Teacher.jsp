@@ -21,7 +21,7 @@
         <th>手机号</th>
         <th>操作</th>
     </tr>
-    <c:forEach items="${teacherList}" var="teacher">
+    <c:forEach items="${page.list}" var="teacher">
         <tr>
             <td>${teacher.tno}</td>
             <td>${teacher.tname}</td>
@@ -32,7 +32,33 @@
             </td>
         </tr>
     </c:forEach>
+    <c:if test="${not page.first}">
+        <a href="${pageContext.request.contextPath}/TeacherServlet?method=getPages&pageNum=1&pageSize=${page.pageSize}">首页</a>
+    </c:if>
+    <c:if test="${page.hasPrevious}">
+        <a href="${pageContext.request.contextPath}/TeacherServlet?method=getPages&pageNum=${page.pageNum-1}&pageSize=${page.pageSize}">上一页</a>
+    </c:if>
+    <c:if test="${page.hasNext}">
+        <a href="${pageContext.request.contextPath}/TeacherServlet?method=getPages&pageNum=${page.pageNum+1}&pageSize=${page.pageSize}">下一页</a>
+    </c:if>
+    <c:if test="${not page.last}">
+        <a href="${pageContext.request.contextPath}/TeacherServlet?method=getPages&pageNum=${page.pages}&pageSize=${page.pageSize}">尾页</a>
+    </c:if>
 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script type="text/javascript">
         function deleteTea(tno){

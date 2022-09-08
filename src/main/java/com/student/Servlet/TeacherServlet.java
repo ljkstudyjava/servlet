@@ -1,5 +1,7 @@
 package com.student.Servlet;
 
+import com.student.Pojo.BaseQuery;
+import com.student.Pojo.Page;
 import com.student.Pojo.Teacher;
 import com.student.Service.TeacherService;
 import com.student.utils.MyUTF;
@@ -21,9 +23,9 @@ public class TeacherServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method = request.getParameter("method");
-        if (method.equals("getAllTea")){
+        if (method.equals("getPages")){
 //            获取教师表所有信息
-            getAllTea(request,response);
+            getPages(request,response);
         }else if(method.equals("deleteTea")){
             deleteTea(request,response);
         }else if(method.equals("getTeaByTno")){
@@ -33,7 +35,55 @@ public class TeacherServlet extends HttpServlet {
         }else if(method.equals("addTea")){
             addTea(request,response);
         }
+//        原本的查询所有方法
+//        else if(method.equals("getPages")){
+//            getPages(request,response);
+//        }
 
+
+
+    }
+
+    private void getPages(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("utf-8");
+        String pageNumStr = request.getParameter("pageNum");
+        String pageSizeStr = request.getParameter("pageSize");
+//        System.out.println(pageNumStr);
+//        System.out.println(pageSizeStr);
+//        System.out.println("-------");
+        BaseQuery baseQuery = new BaseQuery();
+
+        if(pageNumStr!=null && !"".equals(pageNumStr)){
+            baseQuery.setPageNum(Integer.parseInt(pageNumStr));
+        }
+        if(pageSizeStr!=null && !"".equals(pageSizeStr)){
+            baseQuery.setPageSize(Integer.parseInt(pageSizeStr));
+        }
+
+        List<Teacher> teacherList = teacherService.getPages(baseQuery);
+//        System.out.println(teacherList);
+        Page<Teacher> page = new Page<>();
+        page.setList(teacherList);
+        page.setPageNum(baseQuery.getPageNum());
+        page.setPageSize(baseQuery.getPageSize());
+        int total = teacherService.getTotal();
+//        System.out.println(total+"--------");
+//        System.out.println(page.getPageNum());
+//        System.out.println(page.getPageSize());
+        page.setTotal(total);
+//        ps代表每个分页的条数
+        int ps = baseQuery.getPageSize();
+        int pages = 0;
+        if(total % ps == 0){
+            pages = total / ps;
+        }else {
+            pages = total / ps + 1;
+        }
+        page.setPages(pages);
+
+
+        request.setAttribute("page",page);
+        request.getRequestDispatcher("Teacher.jsp").forward(request,response);
 
 
     }
@@ -107,4 +157,5 @@ public class TeacherServlet extends HttpServlet {
         request.setAttribute("teacherList",teacherList);
         request.getRequestDispatcher("Teacher.jsp").forward(request,response);
     }
+
 }
