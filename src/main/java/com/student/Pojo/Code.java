@@ -50,7 +50,8 @@ public class Code {
 
     public static final String ERROR_MSG_USER_EXIST = "该用户已存在";
 
-
+    public static final int SUCCESS_CODE_NOT_UNQUALIFIED_SCORE = 107;
+    public static final String SUCCESS_MSG_NOT_UNQUALIFIED_SCORE ="恭喜全部合格";
 
 
 }

@@ -12,6 +12,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+import static com.student.Pojo.Code.SUCCESS_CODE;
+
 /**
  * 学生模块
  * 主要功能有查看选课信息和选课
@@ -40,7 +42,41 @@ public class StudentServlet extends HttpServlet {
             selectCourse(request, response);
         } else if (method.equals("getAllCourse")) {
             getAllCourse(request, response);
+        } else if (method.equals("selectUnQualified")) {
+            //System.out.println(1);
+            selectUnQualified(request, response);
         }
+
+    }
+
+
+    //查询未及格成绩
+    private void selectUnQualified(HttpServletRequest request, HttpServletResponse response) {
+        //获取登录的账号：学号
+        User user = (User) request.getSession().getAttribute("user");
+
+        //获取当前用户编号转为int
+        int id = Integer.parseInt(user.getUserName());
+
+        //根据学号查询该生所选课程，并判断成绩是否合格
+
+        //
+        Result result = studentService.selectUnQualified(id);
+
+        if (result.getCODE() == SUCCESS_CODE) {
+            //该生有不及格信息，传回前端并展示
+            request.setAttribute("scoreList", result.getData());
+            try {
+                request.getRequestDispatcher("score.jsp").forward(request, response);
+            } catch (ServletException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        //该生全部合格
+        request.setAttribute("MSG", result.getMsg());
+        //刷新列表
+        getMyCourse(request, response);
 
     }
 
@@ -52,7 +88,6 @@ public class StudentServlet extends HttpServlet {
 
         //获取当前用户编号转为int
         int id = Integer.parseInt(user.getUserName());
-
 
 
         //获取所有选课表

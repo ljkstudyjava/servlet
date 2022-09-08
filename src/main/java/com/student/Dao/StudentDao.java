@@ -108,12 +108,45 @@ public class StudentDao {
         String sql = "insert into stu (sno, sname, gender, address) values (?,?,?,?)";
         try {
             ps = conn.prepareStatement(sql);
-            ps.setInt(1,doRegisterInfo.getSno());
-            ps.setString(2,doRegisterInfo.getSname());
-            ps.setString(3,doRegisterInfo.getSex());
-            ps.setString(3,doRegisterInfo.getAddress());
+            ps.setInt(1, doRegisterInfo.getSno());
+            ps.setString(2, doRegisterInfo.getSname());
+            ps.setString(3, doRegisterInfo.getSex());
+            ps.setString(3, doRegisterInfo.getAddress());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Result selectUnQualified(int id) {
+        conn = JdbcUtils.getConnection();
+
+        List<StudentInfoCourse> list = new ArrayList<>();
+
+        String sql = "SELECT course.cname,  course.cid,teacher.tname,grade.score \n" +
+                "FROM course,grade,teacher \n" +
+                "WHERE grade.cno=course.cid \n" +
+                "AND course.tno=teacher.tno\n" +
+                "AND grade.sno = ?\n" +
+                "AND score <=60.0 ";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                StudentInfoCourse studentInfoCourse = new StudentInfoCourse();
+                studentInfoCourse.setCname(rs.getString(1));
+                studentInfoCourse.setCid(rs.getString(2));
+                studentInfoCourse.setTname(rs.getString(3));
+                studentInfoCourse.setScore(rs.getDouble(4));
+                list.add(studentInfoCourse);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (list.isEmpty()) {
+            return new Result(SUCCESS_CODE_NOT_UNQUALIFIED_SCORE, SUCCESS_MSG_NOT_UNQUALIFIED_SCORE);
+        }
+        return new Result(SUCCESS_CODE, SUCCESS_MSG, list);
     }
 }

@@ -46,4 +46,8 @@ public class StudentService {
         return studentDao.selectCourse(id, tnoStr, cnoStr);
     }
 
+    public Result selectUnQualified(int id) {
+
+        return studentDao.selectUnQualified(id);
+    }
 }

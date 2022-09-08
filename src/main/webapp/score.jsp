@@ -29,5 +29,12 @@
         </tr>
     </c:forEach>
 </table>
+
+<form action="stu" method="post">
+    <span style="color: red">${MSG}</span>
+    <label>
+        查询未合格成绩:<input type="submit" name="method" value="selectUnQualified">
+    </label>
+</form>
 </body>
 </html>
