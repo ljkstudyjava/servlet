@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.student.Pojo.*;
 import com.student.Service.MenuService;
 import com.student.Service.UserService;
+import com.student.utils.MyUTF;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static com.student.Pojo.Code.SUCCESS_CODE;
@@ -44,11 +46,23 @@ public class UserServlet extends HttpServlet {
         //处理注册请求
         String userName = request.getParameter("userName");
         int sno = Integer.parseInt(request.getParameter("userName"));
+
         String password = request.getParameter("password");
+
         String sname = request.getParameter("sname");
         String sex = request.getParameter("sex");
         String address = request.getParameter("address");
 
+        try {
+            sname = MyUTF.getNewString(sname);
+            sex = MyUTF.getNewString(sex);
+            address = MyUTF.getNewString(address);
+
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(sex);
         DoRegisterInfo doRegisterInfo = new DoRegisterInfo();
         doRegisterInfo.setSno(sno);
         doRegisterInfo.setSname(sname);
