@@ -102,7 +102,7 @@ public class TeacherServlet extends HttpServlet {
         int phone = Integer.parseInt(phoneStr);
         int row = teacherService.addTea(tno,tname,gender,phone,password);
         if(row > 0){
-            getAllTea(request,response);
+            getPages(request,response);
         }
     }
 
@@ -125,7 +125,7 @@ public class TeacherServlet extends HttpServlet {
 //        调用修改的service
         int row = teacherService.updateTea(tno,tname,gender,phone);
         if(row > 0){
-            getAllTea(request,response);
+            getPages(request,response);
         }
     }
 
@@ -145,7 +145,7 @@ public class TeacherServlet extends HttpServlet {
         int tno = Integer.parseInt(tnoStr);
         int row = teacherService.deleteTea(tno);
         if(row>0){
-            getAllTea(request,response);
+            getPages(request,response);
         }
     }
 
