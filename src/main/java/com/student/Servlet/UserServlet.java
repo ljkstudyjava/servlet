@@ -17,8 +17,8 @@ import static com.student.Pojo.Code.SUCCESS_CODE;
 
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
-    private UserService userService = new UserService();
-    private MenuService menuService = new MenuService();
+    private final UserService userService = new UserService();
+    private final MenuService menuService = new MenuService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doGet(request, response);

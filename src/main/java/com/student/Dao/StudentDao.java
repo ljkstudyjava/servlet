@@ -111,7 +111,7 @@ public class StudentDao {
             ps.setInt(1, doRegisterInfo.getSno());
             ps.setString(2, doRegisterInfo.getSname());
             ps.setString(3, doRegisterInfo.getSex());
-            ps.setString(3, doRegisterInfo.getAddress());
+            ps.setString(4, doRegisterInfo.getAddress());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
